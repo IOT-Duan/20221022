@@ -60,8 +60,8 @@
         <h2 style="margin-top: 10px">
 
           基于检验检查的决策智能体
-          <el-button type="success" round @click="getData()"> 执行决策 </el-button>
 
+          <el-button type="success" round @click="getDecisionFromInspection()"> 执行决策 </el-button>
         </h2>
 
 <!--        <el-table :data="tableData1" stripe style="width: 100%" >-->
@@ -84,7 +84,7 @@
 
           基于影像报告的决策智能体
 
-          <el-button type="success" round @click="getData()"> 执行决策 </el-button>
+          <el-button type="success" round @click="getDecisionFromImageReport()"> 执行决策 </el-button>
         </h2>
         <el-table :data="patientTable" stripe style="width: 100%" >
           <el-table-column
@@ -98,7 +98,7 @@
 
         <h2 style="margin-top: 70px">
           基于病历其他信息的决策智能体
-          <el-button type="success" round @click="getData()"> 执行决策 </el-button>
+          <el-button type="success" round @click="getDecisionFromMedicalRecords()"> 执行决策 </el-button>
         </h2>
         <el-table :data="patientTable" stripe style="width: 100%" >
           <el-table-column
@@ -128,7 +128,7 @@ export default {
     return {
 
       user: {},
-      tableData1: [],
+      // tableData1: [],
       patientTableHeader: {
 
         name: 'Name',
@@ -164,6 +164,64 @@ export default {
           .catch((err) => {
             console.log(err)})
       },
+
+    getDecisionFromInspection(){
+
+      const urlApi = "/api/doctor/getEvidence";
+      const bah = "6071548";
+      axios.post(
+          urlApi,
+          {"bah": bah, "code": 0},
+      )
+          .then((res) => {
+
+            this.patientTable = res.data.data;
+          })
+          .catch((err) => {
+
+            console.log(err)
+          })
+
+    },
+
+    getDecisionFromImageReport(){
+
+      const urlApi = "/api/doctor/getEvidence";
+      const bah = "6071548";
+      axios.post(
+          urlApi,
+          {"bah": bah, "code": 1},
+      )
+          .then((res) => {
+
+            this.patientTable = res.data.data;
+          })
+          .catch((err) => {
+
+            console.log(err)
+          })
+
+    },
+
+    getDecisionFromMedicalRecords(){
+
+      const urlApi = "/api/doctor/getEvidence";
+      const bah = "6071548";
+      axios.post(
+          urlApi,
+          {"bah": bah, "code": 2},
+      )
+          .then((res) => {
+
+            this.patientTable = res.data.data;
+          })
+          .catch((err) => {
+
+            console.log(err)
+          })
+
+    },
+
   },
 
 };
