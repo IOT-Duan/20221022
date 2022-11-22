@@ -47,12 +47,24 @@
       </el-aside>
 
       <el-main style="margin-top: 10px">
-          <h2> 病人搜索 </h2>
+          <h2>
+            病人搜索
+            <el-button type="success" round @click="getPatients()">
+              搜索
+            </el-button>
+          </h2>
           <el-input
               v-model="input"
               placeholder="Please input bah "
               clearable
           />
+
+        <h3 style="margin-top: 60px"> 基本信息 </h3>
+        <el-table  :data="patientTable" stripe style="width: 100%">
+          <el-table-column prop="patient_sn" label="Patient_sn" />
+          <el-table-column prop="bah" label="Bah"  />
+          <el-table-column prop="diagnosis" label="Diagnosis"/>
+        </el-table>
 
           <h3 style="margin-top: 60px"> 基本信息 </h3>
           <el-table  stripe style="width: 100%">
@@ -98,7 +110,53 @@
   </el-scrollbar>
 </template>
 
-<script >
+<script>
+import axios from "axios";
+
+export default {
+
+  name: "InformationPage",
+
+  data() {
+
+    return {
+
+      user: {},
+      patientTableHeader: {
+
+        name: 'Name',
+        percentage: 'Percentage',
+        evidence: 'Evidence',
+        else: 'Else'
+      },
+      patientTable : []
+    }
+  },
+
+  methods:{
+
+    getPatients(){
+
+      const urlApi = "/api/doctor/getPatients";
+      const token = "Southeast University";
+      axios.post(
+          urlApi,
+          {"token": token},
+      )
+          .then((res) => {
+
+            this.patientTable = res.data.data;
+          })
+          .catch((err) => {
+
+            console.log(err)
+          })
+
+    },
+
+  },
+
+};
 </script>
 
 <style scoped>

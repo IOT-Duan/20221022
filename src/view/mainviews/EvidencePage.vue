@@ -86,6 +86,8 @@
 
           <el-button type="success" round @click="getDecisionFromImageReport()"> 执行决策 </el-button>
         </h2>
+
+        <span> {{ patientTable}}</span>
         <el-table :data="patientTable" stripe style="width: 100%" >
           <el-table-column
               :prop="index"
